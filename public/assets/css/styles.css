@@ -1,0 +1,40 @@
+@import 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700';
+@import url('./nav-sidebar.css');
+@import url('./main-content.css');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f8f9fd;
+}
+
+@media (max-width: 1024px) {
+  .information .card {
+    width: 100%;
+  }
+  #chart-revenue {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    overflow-y: scroll;
+  }
+  .content {
+    padding: 40px 16px;
+    width: fit-content;
+  }
+  .search {
+    width: 250px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    margin-left: 0;
+  }
+}
