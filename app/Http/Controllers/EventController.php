@@ -7,7 +7,10 @@ use App\Models\Event;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreEventRequest;
+use Exception;
+use PhpParser\Node\Stmt\TryCatch;
 
 class EventController extends Controller
 {
@@ -16,7 +19,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::orderByDesc('id')->get();
+        $events = Event::orderByDesc('id')->paginate(10);
         return view('admin.event.index', compact('events'));
     }
 
@@ -34,15 +37,23 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
+        $user = Auth::user();
 
-        DB::transaction(function () use ($request) {
-            $validated = $request->validated();
-            $validated['slug'] = Str::slug($request->name);
+        if (!$user) {
+            return back()->withErrors('Invalid role');
+        }
+
+        $validated = $request->validated();
+        $validated['slug'] = Str::slug($request->name);
+        $validated['organizer_id'] = $user->id;
+
+        DB::transaction(function () use ($validated) {
             Event::create($validated);
         });
 
         return redirect()->route('admin.event.index')->with('message', 'Create Event Has Been Success');
     }
+
 
     /**
      * Display the specified resource.
@@ -57,15 +68,27 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+
+        return view('admin.event.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(StoreEventRequest $request, Event $event)
     {
-        //
+         // Memeriksa apakah pengguna yang sedang login adalah organizer dari event tersebut
+         if ($event->organizer_id !== Auth::user()->id) {
+            return back()->withErrors('Invalid role');
+        }
+
+        $validated = $request->validated();
+
+        DB::transaction(function () use ($validated, $event) {
+            $event->update($validated);
+        });
+
+        return redirect()->route('admin.event.index')->with('message', 'Edit Event Has Been Success');
     }
 
     /**
@@ -73,6 +96,24 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        DB::beginTransaction();
+        try {
+            // Memeriksa apakah pengguna yang sedang login adalah organizer dari event tersebut
+            if ($event->organizer_id !== Auth::user()->id) {
+                return back()->withErrors('Invalid role');
+            }
+
+            // Menghapus event
+            $event->delete();
+
+            // Commit transaksi
+            DB::commit();
+
+            return redirect()->route('admin.event.index')->with('message', 'Delete Event Has Been Success');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollBack();
+            return back()->withErrors('Failed to delete event: ' . $e->getMessage());
+        }
     }
 }

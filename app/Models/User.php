@@ -52,7 +52,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected $with=(['events','registrations','notifications']);
+
 
     public function events(): HasMany
     {

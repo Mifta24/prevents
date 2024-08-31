@@ -8,14 +8,16 @@
             <!-- Event Name -->
             <div class="mb-3">
                 <label for="eventName" class="form-label">Event Name</label>
-                <input type="text" name="name" class="form-control" id="eventName" placeholder="Enter event name" required>
+                <input type="text" name="name" class="form-control" id="eventName" placeholder="Enter event name"
+                    required>
             </div>
 
-            <!-- Event Date -->
+            <!-- Event Datetime -->
             <div class="mb-3">
-                <label for="eventDate" class="form-label">Event Date</label>
-                <input type="date" name="date" class="form-control" id="eventDate" required>
+                <label for="eventDatetime" class="form-label">Event Date and Time</label>
+                <input type="datetime-local" name="date" class="form-control" id="eventDatetime" required>
             </div>
+
 
 
             <!-- Event Time -->
@@ -27,21 +29,21 @@
             <!-- Event Location -->
             <div class="mb-3">
                 <label for="eventLocation" class="form-label">Event Location</label>
-                <input type="text" name="location" class="form-control" id="eventLocation" placeholder="Enter event location"
-                    required>
+                <input type="text" name="location" class="form-control" id="eventLocation"
+                    placeholder="Enter event location" required>
             </div>
 
             <!-- Event Description -->
             <div class="mb-3">
                 <label for="eventDescription" class="form-label">Event Description</label>
-                <textarea class="form-control" name="description" id="eventDescription" rows="4" placeholder="Enter event description" required></textarea>
+                <textarea class="form-control" name="description" id="eventDescription" rows="4"
+                    placeholder="Enter event description" required></textarea>
             </div>
 
-             <!-- Event Location -->
-             <div class="mb-3">
+            <!-- Event Location -->
+            <div class="mb-3">
                 <label for="eventCapacity" class="form-label">Event Capacity</label>
-                <input type="int" name="capacity" class="form-control" id="eventCapacity"
-                    required>
+                <input type="int" name="capacity" class="form-control" id="eventCapacity" required>
             </div>
 
             <!-- Submit Button -->

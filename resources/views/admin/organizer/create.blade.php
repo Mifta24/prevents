@@ -2,7 +2,7 @@
 
     <div class="container mt-5">
         <h2 class="mb-4">Add New Organizer</h2>
-        <form action="{{ route('admin.user.organizer') }}" method="POST">
+        <form action="{{ route('admin.organizer.store') }}" method="POST">
             @csrf
             @method('PUT')
             <!-- Event Name -->

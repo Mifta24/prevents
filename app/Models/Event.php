@@ -12,7 +12,6 @@ class Event extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with=(['organizer','tickets']);
 
     protected $fillable = [
         'organizer_id',

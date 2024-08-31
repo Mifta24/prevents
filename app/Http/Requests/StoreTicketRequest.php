@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEventRequest extends FormRequest
+class StoreTicketRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->hasAnyRole(['organizer', 'admin']);
+        return false;
     }
 
     /**
@@ -22,11 +22,11 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'date' => 'required|date',
-            'location' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'capacity' => 'required|integer'
+            'event_id' => 'required|int',
+            'type' => 'required|string',
+            'price' => 'required|int',
+            'available_quantity' => 'required|int',
+            
         ];
     }
 }

@@ -10,7 +10,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $with=(['registration']);
+   
 
     protected $fillable = [
         'registration_id',

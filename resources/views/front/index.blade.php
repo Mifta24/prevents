@@ -94,7 +94,8 @@
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-primary rounded-pill py-2 px-4 me-2">Register</a>
+                <a href="{{ route('login') }}" class="btn btn-primary rounded-pill py-2 px-4">Login</a>
             </div>
         </nav>
 
