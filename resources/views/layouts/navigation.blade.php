@@ -45,7 +45,7 @@
           </div>
           <div class="menu">
               <p>Others</p>
-              <a href="#" class="item-menu">
+              <a href="{{ route('profile.edit') }}" class="item-menu">
                   <i class="icon ic-settings"></i>
                   Settings
               </a>

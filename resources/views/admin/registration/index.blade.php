@@ -19,7 +19,12 @@
                     <td>{{ $registration->participant->name }}</td>
                     <td>{{ $registration->event->name }}</td>
                     <td>{{ $registration->ticket->type }}</td>
-                    <td> <span class="bg-warning rounded-pill px-2 py-1 my-3 text-center">{{ $registration->payment_status }}</span></td>
+                    <td>
+                        @if ($registration->payment_status=='paid')
+                        <span class="bg-success rounded-pill px-2 py-1 my-3 text-center text-white">{{ $registration->payment_status }}</span></td>
+                        @else
+                        <span class="bg-warning rounded-pill px-2 py-1 my-3 text-center text-white">{{ $registration->payment_status }}</span></td>
+                        @endif
                     <td><a href="{{ route('admin.registration.show', $registration->id) }}"
                             class="btn btn-primary">Manage</a></td>
                 </tr>
@@ -31,3 +36,4 @@
         </tbody>
     </table>
 </x-app-layout>
+
