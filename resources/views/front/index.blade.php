@@ -94,8 +94,19 @@
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
+                @guest
                 <a href="{{ route('register') }}" class="btn btn-outline-primary rounded-pill py-2 px-4 me-2">Register</a>
                 <a href="{{ route('login') }}" class="btn btn-primary rounded-pill py-2 px-4">Login</a>
+                @endguest
+
+                @auth
+                     <!-- Authentication -->
+                  <form method="POST" class="border-0"  action="{{ route('logout') }}" >
+                    @csrf
+                    <button class="btn btn-danger rounded-pill py-2 px-4" ><i class="icon ic-logout"></i>
+                      Logout</button>
+                </form>
+                @endauth
             </div>
         </nav>
 

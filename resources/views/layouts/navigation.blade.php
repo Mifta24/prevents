@@ -12,11 +12,11 @@
       <div class="pt-2 d-flex flex-column gap-5">
           <div class="menu p-0">
               <p>Daily Use</p>
-              <a href="#" class="item-menu active">
+              <a href="{{ route('dashboard') }}" class="item-menu active">
                   <i class="icon ic-stats"></i>
                   Overview
               </a>
-              <a href="#" class="item-menu">
+              <a href="{{ route('admin.registration.index') }}" class="item-menu">
                   <i class="icon ic-trans"></i>
                   Transactions
               </a>
@@ -32,6 +32,7 @@
                   <i class="icon ic-account"></i>
                   Tickets
               </a>
+              @role('admin')
               <a href="{{ route('admin.organizer.index') }}" class="item-menu">
                   <i class="icon ic-account"></i>
                   Organizer
@@ -40,6 +41,7 @@
                   <i class="icon ic-account"></i>
                   User
               </a>
+              @endrole
           </div>
           <div class="menu">
               <p>Others</p>

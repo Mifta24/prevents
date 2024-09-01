@@ -19,7 +19,18 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::orderByDesc('id')->paginate(10);
+
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+
+            $events = Event::orderByDesc('id')->paginate(10);
+        }
+        else{
+
+            $events = Event::where('oganizer_id',$user->id)->orderByDesc('id')->paginate(10);
+        }
+
         return view('admin.event.index', compact('events'));
     }
 

@@ -10,11 +10,11 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('front.index');
-});
+})->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard')->middleware('role:admin|organizer');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/organizer/destory/{user:id}',[UserController::class,'organizerDestroy'])->middleware('role:admin')->name('organizer.destroy');
 
         // registrtion
-        Route::resource('registration',RegistrationController::class)->middleware('role:admin');
+        Route::resource('registration',RegistrationController::class)->middleware('role:admin|organizer');
 
         // payment
         Route::resource('payment',PaymentController::class)->middleware('role:admin');
