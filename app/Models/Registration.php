@@ -14,10 +14,14 @@ class Registration extends Model
     protected $fillable = [
         'event_id',
         'ticket_id',
-        'paticipant_id',
+        'participant_id',
         'payment_status',
     ];
 
+    public function participant()
+    {
+        return $this->belongsTo(User::class, 'participant_id');
+    }
 
     public function event(): BelongsTo
     {

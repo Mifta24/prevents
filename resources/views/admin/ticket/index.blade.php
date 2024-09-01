@@ -22,7 +22,7 @@
                     <td>{{ $ticket->price }}</td>
                     <td>{{ $ticket->available_quantity }}</td>
                     <td>{{ $ticket->created_at }}</td>
-                    <td><a href="{{ route('admin.ticket.edit', $ticket) }}" class="btn btn-warning">Edit</a>
+                    <td class="d-flex"><a href="{{ route('admin.ticket.edit', $ticket) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('admin.ticket.destroy', $ticket) }}" method="post">
                             @csrf
                             @method('DELETE')

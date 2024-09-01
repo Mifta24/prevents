@@ -21,25 +21,32 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('admin')->name('admin.')->group(function (){
+    Route::prefix('admin')->name('admin.')->group(function () {
         // events
-        Route::resource('event',EventController::class)->middleware('role:admin|organizer');
+        Route::resource('event', EventController::class)->middleware('role:admin|organizer');
 
         // tickets
-        Route::resource('ticket',TicketController::class)->middleware('role:admin|organizer');
+        Route::resource('ticket', TicketController::class)->middleware('role:admin|organizer');
         // organizer
-        Route::get('/organizer',[UserController::class,'organizerIndex'])->middleware('role:admin')->name('organizer.index');
-        Route::get('/organizer/detail',[UserController::class,'organizerShow'])->middleware('role:admin')->name('organizer.show');
-        Route::get('/organizer/create',[UserController::class,'organizerCreate'])->middleware('role:admin')->name('organizer.create');
-        Route::put('/organizer/role',[UserController::class,'organizerStore'])->middleware('role:admin')->name('organizer.store');
-        Route::delete('/organizer/destory/{user:id}',[UserController::class,'organizerDestroy'])->middleware('role:admin')->name('organizer.destroy');
+        Route::get('/organizer', [UserController::class, 'organizerIndex'])->middleware('role:admin')->name('organizer.index');
+        Route::get('/organizer/detail', [UserController::class, 'organizerShow'])->middleware('role:admin')->name('organizer.show');
+        Route::get('/organizer/create', [UserController::class, 'organizerCreate'])->middleware('role:admin')->name('organizer.create');
+        Route::put('/organizer/role', [UserController::class, 'organizerStore'])->middleware('role:admin')->name('organizer.store');
+        Route::delete('/organizer/destory/{user:id}', [UserController::class, 'organizerDestroy'])->middleware('role:admin')->name('organizer.destroy');
 
         // registrtion
-        Route::resource('registration',RegistrationController::class)->middleware('role:admin|organizer');
+        Route::resource('registration', RegistrationController::class)->middleware('role:admin|organizer');
+        // Route khusus untuk aksi approve
+        Route::post('registrations/{registration}/approve', [RegistrationController::class, 'approve'])->name('registration.approve');
+
+        // Route khusus untuk aksi reject
+        Route::post('registrations/{registration}/reject', [RegistrationController::class, 'reject'])->name('registration.reject');
+
+
 
         // payment
-        Route::resource('payment',PaymentController::class)->middleware('role:admin');
+        Route::resource('payment', PaymentController::class)->middleware('role:admin');
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

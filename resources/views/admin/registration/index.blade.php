@@ -16,18 +16,18 @@
             @forelse ($registrations as $registration)
                 <tr>
                     <th scope="row">1</th>
-                    <td>{{ $registration->user->name }}</td>
+                    <td>{{ $registration->participant->name }}</td>
                     <td>{{ $registration->event->name }}</td>
-                    <td>{{ $registration->ticket }}</td>
-                    <td> <span class="bg-warning rounded-circle">{{ $registration->payment_status }}</span></td>
+                    <td>{{ $registration->ticket->type }}</td>
+                    <td> <span class="bg-warning rounded-pill px-2 py-1 my-3 text-center">{{ $registration->payment_status }}</span></td>
                     <td><a href="{{ route('admin.registration.show', $registration->id) }}"
-                            class="btn btn-warning">Manage</a></td>
+                            class="btn btn-primary">Manage</a></td>
                 </tr>
             @empty
+            <tr>
+                <td colspan="6" class=" text-center">Data Kosong</td>
+            </tr>
             @endforelse
-                <tr>
-                    <td colspan="6" class=" text-center">Data Kosong</td>
-                </tr>
         </tbody>
     </table>
 </x-app-layout>

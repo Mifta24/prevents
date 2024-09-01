@@ -1,14 +1,14 @@
 <x-app-layout>
     <div class="container my-3">
         <h1>Manage Registration</h1>
-        <div class="card">
+        <div class="card mt-2">
             <div class="card-header">
                 Registration Details
             </div>
             <div class="card-body">
-                <p><strong>Participant Name:</strong> {{ $registration->user->name }}</p>
+            <p><strong>Participant Name:</strong> {{ $registration->participant->name }}</p>
                 <p><strong>Event:</strong> {{ $registration->event->name }}</p>
-                <p><strong>Ticket:</strong> {{ $registration->ticket }}</p>
+                <p><strong>Ticket:</strong> {{ $registration->ticket->type }}</p>
                 <p><strong>Amount:</strong> {{ $registration->payment->amount }}</p>
                 <p><strong>Payment Method:</strong> {{ $registration->payment->payment_method }}</p>
                 <p><strong>Payment Date:</strong> {{ $registration->payment->payment_date }}</p>

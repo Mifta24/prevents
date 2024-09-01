@@ -11,7 +11,7 @@ class StoreTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->hasAnyRole(['admin','organizer']);
     }
 
     /**
@@ -26,7 +26,7 @@ class StoreTicketRequest extends FormRequest
             'type' => 'required|string',
             'price' => 'required|int',
             'available_quantity' => 'required|int',
-            
+
         ];
     }
 }
