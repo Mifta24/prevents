@@ -20,7 +20,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $query = Event::query();
+        $query = Event::with(['organizer']);
 
         // Menambahkan kondisi berdasarkan role organizer
         if (!$user->hasRole('admin')) {

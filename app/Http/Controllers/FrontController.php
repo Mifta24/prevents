@@ -18,7 +18,7 @@ class FrontController extends Controller
 {
     public function index()
     {
-        $events = Event::orderBYDesc('id')->get();
+        $events =Event::with('tickets')->orderBYDesc('id')->get();
         return view('front.index', compact('events'));
     }
 
@@ -29,13 +29,13 @@ class FrontController extends Controller
 
     public function event()
     {
-        $events = Event::orderBYDesc('id')->get();
+        $events = Event::with('tickets')->orderBYDesc('id')->get();
         return view('front.event.index', compact('events'));
     }
 
     public function detailEvent(Event $event)
     {
-
+        $event->load('tickets');
         return view('front.event.detail', compact('event'));
     }
 
@@ -70,7 +70,7 @@ class FrontController extends Controller
         $userId = Auth::id();
 
         // Mengambil semua pembayaran yang terkait dengan user tersebut
-        $transactions = Payment::whereHas('registration', function ($query) use ($userId) {
+        $transactions = Payment::with(['registration'])->whereHas('registration', function ($query) use ($userId) {
             $query->where('participant_id', $userId);
         })->with(['registration.event'])->get();
 
@@ -85,7 +85,7 @@ class FrontController extends Controller
 
 
         // Mengambil semua pembayaran yang terkait dengan user tersebut
-        $receipts = Payment::whereHas('registration', function ($query) use ($userId) {
+        $receipts = Payment::with(['registration'])->whereHas('registration', function ($query) use ($userId) {
             $query->where('participant_id', $userId);
         })->with(['registration.event'])->get();
 
@@ -129,7 +129,7 @@ class FrontController extends Controller
 
     public function payment($idReg)
     {
-        $registration = Registration::where('id', $idReg)->first();
+        $registration = Registration::with(['event','ticket'])->where('id', $idReg)->first();
         return view('front.payment.index', compact('registration'));
     }
 
@@ -173,7 +173,7 @@ class FrontController extends Controller
     public function receipt($idReg)
     {
         // Menggunakan first() untuk mendapatkan satu instance dari model Registration
-        $transaction = Registration::where('id', $idReg)->first();
+        $transaction = Registration::with(['event','ticket','payment'])->where('id', $idReg)->first();
 
         // Pastikan bahwa $transaction adalah instance yang valid sebelum mengakses properti
         if (!$transaction) {

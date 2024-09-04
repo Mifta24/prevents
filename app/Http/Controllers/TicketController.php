@@ -17,7 +17,7 @@ class TicketController extends Controller
     public function index(Request $request)
 {
     $user = Auth::user();
-    $query = Ticket::query();
+    $query = Ticket::with(['event']);
 
     // Menambahkan kondisi berdasarkan role pengguna
     if (!$user->hasRole('admin')) {
