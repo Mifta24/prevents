@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Payment;
 use App\Models\Registration;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User;
@@ -38,6 +39,17 @@ class FrontController extends Controller
         return view('front.event.detail', compact('event'));
     }
 
+
+    public function ticket()
+    {
+        $tickets = Ticket::with('event')->orderByDesc('id')->get();
+        return view('front.ticket', compact('tickets'));
+    }
+
+    public function contact()
+    {
+        return view('front.contact');
+    }
 
     public function myTickets()
     {
@@ -71,10 +83,16 @@ class FrontController extends Controller
         // Mendapatkan ID user yang sedang login
         $userId = Auth::id();
 
+
         // Mengambil semua pembayaran yang terkait dengan user tersebut
         $receipts = Payment::whereHas('registration', function ($query) use ($userId) {
             $query->where('participant_id', $userId);
         })->with(['registration.event'])->get();
+
+
+        if ($userId != $receipts->registration->participant_id) {
+            return back()->withErrors('Invalid access user');
+        }
 
         // Mengirim data receipt ke view
         return view('front.profile.receipt', compact('receipts'));
@@ -167,17 +185,12 @@ class FrontController extends Controller
         $user = $transaction->participant;
         $payment = $transaction->payment;
 
+        // Pastikan pengguna yang sedang login adalah pemilik transaksi
+        if (Auth::user()->id != $user->id) {
+            abort(404); // Kirim abort ke 404 jika akses tidak valid
+        }
+
         // Mengirimkan data ke view
         return view('front.receipt.index', compact('transaction', 'event', 'user', 'payment'));
-    }
-
-
-    public function ticket()
-    {
-        // return view('front.ticket');
-    }
-    public function team()
-    {
-        // return view('front.ticket');
     }
 }

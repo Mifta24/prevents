@@ -9,9 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
 
-Route::get('/', function () {
-    return view('front.index');
-})->name('index');
+Route::get('/', [FrontController::class,'index'])->name('index');
 
 
 Route::get('/about', [FrontController::class, 'about'])->name('about');
@@ -22,11 +20,11 @@ Route::get('/detail-event/{event:slug}', [FrontController::class, 'detailEvent']
 
 
 
-Route::get('/ticket', [FrontController::class, 'event'])->name('ticket');
+Route::get('/ticket', [FrontController::class, 'ticket'])->name('ticket');
 
 Route::get('/team', [FrontController::class, 'team'])->name('team');
 
-Route::get('/buy-ticket', [FrontController::class, 'team'])->name('buy.ticket');
+Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 
 
 

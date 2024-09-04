@@ -42,7 +42,7 @@
                 <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
                 <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                 <a href="{{ route('event') }}" class="nav-item nav-link">Events</a>
-                <a href="{{ route('index') }}" class="nav-item nav-link">Tickets</a>
+                <a href="{{ route('ticket') }}" class="nav-item nav-link">Tickets</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
                     <div class="dropdown-menu m-0">
@@ -50,10 +50,9 @@
                         <a href="{{ route('my.transactions') }}" class="dropdown-item">Transaction</a>
                         <a href="{{ route('my.receipts') }}" class="dropdown-item">Receipt</a>
                         <a href="{{ route('my.tickets') }}" class="dropdown-item">Tickets</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
             </div>
             @guest
                 <a href="{{ route('register') }}"

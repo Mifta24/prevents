@@ -1,4 +1,14 @@
 <x-app-layout>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <a href="{{ route('admin.event.create') }}" class="btn btn-success m-3">Create New Event</a>
     <table class="table table-reponsive table-hover mx-3 my-3 w-80">
         <thead class="">

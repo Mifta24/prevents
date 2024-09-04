@@ -64,6 +64,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if (Auth::user()->hasRole('participant')) {
+            return redirect(route('dashboard', absolute: false));
+        }
+        
         return redirect(route('dashboard', absolute: false));
     }
 }
