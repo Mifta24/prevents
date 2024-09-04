@@ -14,7 +14,7 @@ class RegistrationController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $query = Registration::query();
+        $query = Registration::with(['participant','event','ticket']);
 
         // Tambahkan pencarian
         if ($request->has('search')) {
