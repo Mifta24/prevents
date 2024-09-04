@@ -14,20 +14,36 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $user = Auth::user();
+    public function index(Request $request)
+{
+    $user = Auth::user();
+    $query = Ticket::query();
 
-        if ($user->hasRole('admin')) {
-
-            $tickets = Ticket::orderByDesc('id')->get();
-        } else {
-            $tickets = Ticket::whereHas('event', function ($query) use ($user) {
-                $query->where('organizer_id', $user->id);
-            })->orderByDesc('id')->get();
-        }
-        return view('admin.ticket.index', compact('tickets'));
+    // Menambahkan kondisi berdasarkan role pengguna
+    if (!$user->hasRole('admin')) {
+        $query->whereHas('event', function ($q) use ($user) {
+            $q->where('organizer_id', $user->id);
+        });
     }
+
+    // Menambahkan logika pencarian
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('type', 'like', '%' . $search . '%')
+              ->orWhere('price', 'like', '%' . $search . '%')
+              ->orWhereHas('event', function ($eventQuery) use ($search) {
+                  $eventQuery->where('name', 'like', '%' . $search . '%');
+              });
+        });
+    }
+
+    // Mengambil hasil pencarian dan mengurutkan tiket berdasarkan id
+    $tickets = $query->orderByDesc('id')->paginate(10)->withQueryString();
+
+    return view('admin.ticket.index', compact('tickets'));
+}
+
 
     /**
      * Show the form for creating a new resource.

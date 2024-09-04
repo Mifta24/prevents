@@ -17,22 +17,34 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $user = Auth::user();
+        $query = Event::query();
 
-        if ($user->hasRole('admin')) {
-
-            $events = Event::orderByDesc('id')->paginate(10);
+        // Menambahkan kondisi berdasarkan role organizer
+        if (!$user->hasRole('admin')) {
+            $query->where('organizer_id', $user->id);
         }
-        else{
 
-            $events = Event::where('oganizer_id',$user->id)->orderByDesc('id')->paginate(10);
+        // Menambahkan logika pencarian
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('location', 'like', '%' . $search . '%')
+                    ->orWhereHas('organizer',function($q) use ($search){
+                        $q->where('name','like','%' .$search. '%');
+                    });
+            });
         }
+
+        // Mengambil hasil pencarian dan mengurutkan event berdasarkan id
+        $events = $query->orderByDesc('id')->paginate(10)->withQueryString();
 
         return view('admin.event.index', compact('events'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -88,8 +100,8 @@ class EventController extends Controller
      */
     public function update(StoreEventRequest $request, Event $event)
     {
-         // Memeriksa apakah pengguna yang sedang login adalah organizer dari event tersebut
-         if ($event->organizer_id !== Auth::user()->id) {
+        // Memeriksa apakah pengguna yang sedang login adalah organizer dari event tersebut
+        if ($event->organizer_id !== Auth::user()->id) {
             return back()->withErrors('Invalid role');
         }
 

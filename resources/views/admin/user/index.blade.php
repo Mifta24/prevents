@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <form action="{{ route('admin.organizer.index') }}" method="get" class="d-flex align-items-center justify-content-end ">
+    <form action="{{ route('admin.user.index') }}" method="get" class="d-flex align-items-center justify-content-end ">
         <input type="text" name="search" placeholder="Search event or ticket" value="{{ request('search') }}"
             class="search form-control" />
         <button type="submit" class="btn btn-search d-flex justify-content-center align-items-center p-0" type="button">
@@ -9,7 +9,7 @@
 
     </form>
 
-    <a href="{{ route('admin.organizer.create') }}" class="btn btn-success m-3">Create New Event</a>
+
     <table class="table table-reponsive table-hover mx-3 my-3 w-80">
         <thead class="">
             <tr class="table-dark">
@@ -22,14 +22,14 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($organizers as $organizer)
+            @forelse ($users as $user)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $organizer->name }}</td>
-                    <td>{{ $organizer->email }}</td>
-                    <td>{{ $organizer->occupation }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->occupation }}</td>
                     <td>
-                        <form action="{{ route('admin.organizer.destroy',$organizer) }}" method="POST">
+                        <form action="{{ route('admin.user.destroy',$user) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class=" btn btn-danger">
@@ -45,5 +45,5 @@
         </tbody>
     </table>
 
-    {{ $organizers->links() }}
+    {{ $users->links() }}
 </x-app-layout>

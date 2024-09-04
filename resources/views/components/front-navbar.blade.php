@@ -32,7 +32,7 @@
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
         <a href="" class="navbar-brand p-0">
             <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Prevents</h1>
-            <!-- <img src="img/logo.png" alt="Logo"> -->
+             {{-- <img src="{{ asset('assets/images/preventsnobg.png') }}" width="200px" height="500px" alt="Logo"> --}}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
@@ -43,6 +43,8 @@
                 <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                 <a href="{{ route('event') }}" class="nav-item nav-link">Events</a>
                 <a href="{{ route('ticket') }}" class="nav-item nav-link">Tickets</a>
+                @auth
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
                     <div class="dropdown-menu m-0">
@@ -52,6 +54,7 @@
                         <a href="{{ route('my.tickets') }}" class="dropdown-item">Tickets</a>
                     </div>
                 </div>
+                @endauth
                 <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
             </div>
             @guest
@@ -64,9 +67,13 @@
                 <!-- Authentication -->
                 <form method="POST" class="border-0" action="{{ route('logout') }}">
                     @csrf
-                    <button class="btn btn-danger rounded-pill py-2 px-4"><i class="icon ic-logout"></i>
+                    <button class="btn btn-danger rounded-pill py-2 px-4 m-2"><i class="icon ic-logout"></i>
                         Logout</button>
                 </form>
+
+                @role('admin')
+                <a class="btn btn-secondary rounded-pill py-2 px-4" href="{{ route('dashboard') }}">Go AdminPage</a>
+                @endrole
             @endauth
         </div>
     </nav>

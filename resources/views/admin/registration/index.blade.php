@@ -1,5 +1,15 @@
 <x-app-layout>
 
+    <form action="{{ route('admin.registration.index') }}" method="get" class="d-flex align-items-center justify-content-end ">
+        <input type="text" name="search" placeholder="Search event or ticket" value="{{ request('search') }}"
+            class="search form-control" />
+        <button type="submit" class="btn btn-search d-flex justify-content-center align-items-center p-0" type="button">
+            <img src="{{ asset('assets') }}/images/ic_search.svg" width="20px" height="20px" />
+        </button>
+
+    </form>
+
+
     <table class="table table-reponsive table-hover mx-3 my-3 w-80">
         <thead class="">
             <tr class="table-dark">
@@ -15,7 +25,7 @@
         <tbody>
             @forelse ($registrations as $registration)
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $registration->participant->name }}</td>
                     <td>{{ $registration->event->name }}</td>
                     <td>{{ $registration->ticket->type }}</td>
@@ -35,5 +45,7 @@
             @endforelse
         </tbody>
     </table>
+
+    {{ $registrations->links() }}
 </x-app-layout>
 

@@ -47,10 +47,6 @@
                     </button>
                 </div>
                 <div class="d-flex align-items-center justify-content-end gap-4">
-                    <input type="text" placeholder="Search report or product" class="search form-control" />
-                    <button class="btn btn-search d-flex justify-content-center align-items-center p-0" type="button">
-                        <img src="{{ asset('assets') }}/images/ic_search.svg" width="20px" height="20px" />
-                    </button>
                     <img src="{{ asset('assets') }}/images/avatar.jpg" alt="Photo Profile" class="avatar" />
                 </div>
             </div>

@@ -6,8 +6,8 @@
               <i class="fas fa-close"></i>
           </button>
       </div>
-      <div class="d-flex justify-content-center mt-md-5 mb-5">
-          <img src="{{ asset('assets') }}/images/logo.svg" alt="Logo" width="140px" height="40px" />
+      <div class="d-flex justify-content-center mt-md-5 mb-3">
+          <img src="{{ asset('assets') }}/images/preventsnobg.png" alt="Logo" width="140px" height="100px" />
       </div>
       <div class="pt-2 d-flex flex-column gap-5">
           <div class="menu p-0">
@@ -37,7 +37,7 @@
                   <i class="icon ic-account"></i>
                   Organizer
               </a>
-              <a href="#" class="item-menu">
+              <a href="{{ route('admin.user.index') }}" class="item-menu">
                   <i class="icon ic-account"></i>
                   User
               </a>

@@ -9,7 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
 
-Route::get('/', [FrontController::class,'index'])->name('index');
+Route::get('/', [FrontController::class, 'index'])->name('index');
 
 
 Route::get('/about', [FrontController::class, 'about'])->name('about');
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/profile', [ProfileController::class, 'editUser'])->name('my.profile.edit');
+    Route::get('/profile-user', [ProfileController::class, 'editUser'])->name('my.profile.edit');
     Route::get('/my-tickets', [FrontController::class, 'myTickets'])->name('my.tickets');
     Route::get('/my-transactions', [FrontController::class, 'myTransactions'])->name('my.transactions');
     Route::get('/event-details', [FrontController::class, 'myTransactions'])->name('event.details');
@@ -70,6 +70,8 @@ Route::middleware('auth')->group(function () {
         // tickets
         Route::resource('ticket', TicketController::class)->middleware('role:admin|organizer');
         // organizer
+        Route::resource('user', UserController::class)->middleware('role:admin');
+
         Route::get('/organizer', [UserController::class, 'organizerIndex'])->middleware('role:admin')->name('organizer.index');
         Route::get('/organizer/detail', [UserController::class, 'organizerShow'])->middleware('role:admin')->name('organizer.show');
         Route::get('/organizer/create', [UserController::class, 'organizerCreate'])->middleware('role:admin')->name('organizer.create');
